@@ -1,0 +1,7 @@
+include:
+  - project: 'wincentrtz3636/ci-cd-templates'
+    ref: feature/pipelineGCP
+    file: 'pipelines/pipelineGcpJava.yaml'
+
+variables:
+  CI_CD_SCRIPT_VERSION: feature/pipelineGCP
