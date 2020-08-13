@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/spring-hack
     username: postgres
-    password: 12345678
+    password: password
   jpa:
     properties:
       hibernate:
