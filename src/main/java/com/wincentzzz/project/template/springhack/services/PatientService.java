@@ -13,5 +13,4 @@ public interface PatientService {
     void updatePatient(Long id, Patient patient);
     void deletePatient(Long id);
 
-//    PatientResponse login();
 }
