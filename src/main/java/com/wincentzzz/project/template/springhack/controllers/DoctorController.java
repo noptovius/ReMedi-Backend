@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/doctor")
+@RequestMapping(value = "/doctors")
 public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
 
     @GetMapping
-    public BaseResponse<List<DoctorListResponse>> getAllDoctors(@RequestParam("pageNumber") Integer pageNumber,
+    public BaseResponse<List<DoctorListResponse>> getAllDoctors(@RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber,
                                                   @RequestParam(value = "doctorName", required = false, defaultValue = "%") String doctorName,
                                                   @RequestParam(value = "specialization", required = false, defaultValue = "%") String specialization){
         Page<Doctor> doctorPage = doctorService.getAllDoctors(doctorName, specialization, pageNumber);
@@ -39,8 +39,11 @@ public class DoctorController {
     }
 
     @GetMapping("/{id}")
-    public PatientResponse getDoctor(@PathVariable Long id){
-        return DoctorMapper.toDoctorResponse(doctorService.getDoctor(id));
+    public BaseResponse<DoctorResponse> getDoctor(@PathVariable Long id){
+        DoctorResponse doctor = DoctorMapper.toDoctorResponse(doctorService.getDoctor(id));
+        return BaseResponse.<DoctorResponse>builder()
+                .data(doctor)
+                .build();
     }
 
     @PostMapping

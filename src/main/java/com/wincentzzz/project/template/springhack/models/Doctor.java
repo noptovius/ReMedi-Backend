@@ -37,4 +37,10 @@ public class Doctor {
 
     @Column(name = "specialization")
     private String specialization;
+
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "rating")
+    private Float rating;
 }
