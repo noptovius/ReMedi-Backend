@@ -12,10 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class DoctorRequest {
-    private Long id;
     private String name;
     private String photo;
     private Date dob;
     private String phoneNumber;
     private String email;
+    private String specialization;
 }

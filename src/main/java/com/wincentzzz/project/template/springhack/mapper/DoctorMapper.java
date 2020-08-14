@@ -40,6 +40,7 @@ public class DoctorMapper {
                 .dob(doctorRequest.getDob())
                 .phoneNumber(doctorRequest.getPhoneNumber())
                 .email(doctorRequest.getEmail())
+                .specialization(doctorRequest.getSpecialization())
                 .build();
     }
 }
