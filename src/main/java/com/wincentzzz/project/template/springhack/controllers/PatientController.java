@@ -1,7 +1,6 @@
 package com.wincentzzz.project.template.springhack.controllers;
 
 import com.wincentzzz.project.template.springhack.dto.request.PatientRequest;
-import com.wincentzzz.project.template.springhack.dto.response.BaseResponse;
 import com.wincentzzz.project.template.springhack.dto.response.PatientListResponse;
 import com.wincentzzz.project.template.springhack.dto.response.PatientResponse;
 import com.wincentzzz.project.template.springhack.mapper.PatientMapper;
@@ -18,15 +17,6 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
-
-//    @GetMapping
-//    private BaseResponse<PatientResponse> test() {
-//        PatientResponse patientResponse = patientService.login();
-//        return BaseResponse.<PatientResponse>builder()
-//                .code(200)
-//                .data(patientResponse)
-//                .build();
-//    }
 
     @GetMapping
     public List<PatientListResponse> getAllPatients(){
