@@ -18,4 +18,7 @@ public class DoctorResponse {
     private Date dob;
     private String phoneNumber;
     private String email;
+    private String location;
+    private Float rating;
+    private Integer totalAppointments;
 }

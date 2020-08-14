@@ -18,4 +18,6 @@ public class DoctorRequest {
     private String phoneNumber;
     private String email;
     private String specialization;
+    private String location;
+    private Float rating;
 }

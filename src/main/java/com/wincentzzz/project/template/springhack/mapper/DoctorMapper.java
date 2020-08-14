@@ -2,6 +2,7 @@ package com.wincentzzz.project.template.springhack.mapper;
 
 import com.wincentzzz.project.template.springhack.dto.request.DoctorRequest;
 import com.wincentzzz.project.template.springhack.dto.response.DoctorListResponse;
+import com.wincentzzz.project.template.springhack.dto.response.DoctorResponse;
 import com.wincentzzz.project.template.springhack.dto.response.PatientResponse;
 import com.wincentzzz.project.template.springhack.models.Doctor;
 
@@ -15,21 +16,22 @@ public class DoctorMapper {
                 .id(doctor.getId())
                 .name(doctor.getName())
                 .photo(doctor.getPhoto())
-                .dob(doctor.getDob())
-                .phoneNumber(doctor.getPhoneNumber())
-                .email(doctor.getEmail())
+                .location(doctor.getLocation())
+                .rating(doctor.getRating())
                 .build())
                 .collect(Collectors.toList());
     }
 
-    public static PatientResponse toDoctorResponse(Doctor doctor){
-        return PatientResponse.builder()
+    public static DoctorResponse toDoctorResponse(Doctor doctor){
+        return DoctorResponse.builder()
                 .id(doctor.getId())
                 .name(doctor.getName())
                 .photo(doctor.getPhoto())
                 .dob(doctor.getDob())
                 .phoneNumber(doctor.getPhoneNumber())
                 .email(doctor.getEmail())
+                .location(doctor.getLocation())
+                .rating(doctor.getRating())
                 .build();
     }
 
@@ -41,6 +43,8 @@ public class DoctorMapper {
                 .phoneNumber(doctorRequest.getPhoneNumber())
                 .email(doctorRequest.getEmail())
                 .specialization(doctorRequest.getSpecialization())
+                .location(doctorRequest.getLocation())
+                .rating(Float.valueOf(4))
                 .build();
     }
 }
