@@ -14,6 +14,8 @@ public interface AppointmentService {
     void updateAppointment(Long id, Appointment appointment);
     void deleteAppointment(Long id);
 
-    Page<Appointment> getFinishedAppointmentsByPatientId(Long appointmentId, Pageable pageable);
-    Page<Appointment> getScheduledAppointmentsByPatientId(Long appointmentId, Pageable pageable);
+    Page<Appointment> getFinishedAppointmentsByPatientId(Long patientId, Pageable pageable);
+    Page<Appointment> getScheduledAppointmentsByPatientId(Long patientId, Pageable pageable);
+
+    Page<Appointment> getAppointmentsByDoctorId(Long doctorId, Pageable pageable);
 }
