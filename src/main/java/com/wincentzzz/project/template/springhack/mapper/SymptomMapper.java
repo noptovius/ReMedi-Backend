@@ -1,7 +1,7 @@
 package com.wincentzzz.project.template.springhack.mapper;
 
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentSymptom;
-import com.wincentzzz.project.template.springhack.dto.response.AppointmentDetailSymptom;
+import com.wincentzzz.project.template.springhack.dto.response.SymptomResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ public class SymptomMapper {
     private static final String symptomDelimiter = "@";
     private static final String symptomDetailDelimiter = "#";
 
-    public static List<AppointmentDetailSymptom> toAppointmentDetailSymptoms(String symptoms){
-        List<AppointmentDetailSymptom> appointmentDetailSymptoms = new ArrayList<>();
+    public static List<SymptomResponse> toAppointmentDetailSymptoms(String symptoms){
+        List<SymptomResponse> symptomResponses = new ArrayList<>();
 
         final int symptomIdIndex = 0;
         final int symptomNameIndex = 1;
@@ -21,13 +21,13 @@ public class SymptomMapper {
 
             String[] splitSymptomDetails = splitSymptom.split(symptomDetailDelimiter);
 
-            appointmentDetailSymptoms.add(AppointmentDetailSymptom.builder()
+            symptomResponses.add(SymptomResponse.builder()
                     .id(Long.valueOf(splitSymptomDetails[symptomIdIndex]))
                     .name(splitSymptomDetails[symptomNameIndex])
                     .build());
         }
 
-        return appointmentDetailSymptoms;
+        return symptomResponses;
     }
 
     public static String toAppointmentSymptomString(List<AppointmentSymptom> appointmentSymptoms){

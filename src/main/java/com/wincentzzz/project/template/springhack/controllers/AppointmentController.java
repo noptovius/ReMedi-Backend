@@ -75,8 +75,8 @@ public class AppointmentController {
 
 
     @GetMapping("/{id}")
-    public BaseResponse<AppointmentDetailResponse> getAppointment(@PathVariable Long id) {
-        return BaseResponse.<AppointmentDetailResponse>builder()
+    public BaseResponse<AppointmentResponse> getAppointment(@PathVariable Long id) {
+        return BaseResponse.<AppointmentResponse>builder()
                 .code(200)
                 .data(AppointmentMapper.toAppointmentDetailResponse(appointmentService.getAppointment(id)))
                 .build();

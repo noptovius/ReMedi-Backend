@@ -1,4 +1,4 @@
-package com.wincentzzz.project.template.springhack.dto.response;
+package com.wincentzzz.project.template.springhack.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AppointmentDetailMedicine {
+public class ExaminationRequest {
+    private Long appointmentId;
     private String name;
-    private String weight;
+    private String file;
 }
