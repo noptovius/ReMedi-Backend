@@ -38,13 +38,4 @@ public class PatientServiceImpl implements PatientService {
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
     }
-
-//    @Override
-//    public PatientResponse login() {
-//        PatientResponse patientResponse = PatientResponse.builder()
-//                .username("Username")
-//                .password("Password")
-//                .build();
-//        return patientResponse;
-//    }
 }

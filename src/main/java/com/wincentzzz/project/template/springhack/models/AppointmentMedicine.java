@@ -6,23 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "medicine")
-public class Medicine {
+@Table(name = "appointment_medicine")
+public class AppointmentMedicine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "medicine")
-    private List<AppointmentMedicine> appointmentMedicines;
+    @ManyToOne
+    @JoinColumn(name="appointment_id")
+    private Appointment appointment;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name="medicine_id")
+    private Medicine medicine;
+
+    private String weight;
 }
