@@ -4,6 +4,7 @@ import com.wincentzzz.project.template.springhack.dto.request.AppointmentRequest
 import com.wincentzzz.project.template.springhack.dto.response.AppointmentResponse;
 import com.wincentzzz.project.template.springhack.dto.response.AppointmentListItem;
 import com.wincentzzz.project.template.springhack.dto.response.AppointmentListResponse;
+import com.wincentzzz.project.template.springhack.dto.response.MedicineListResponse;
 import com.wincentzzz.project.template.springhack.models.*;
 import com.wincentzzz.project.template.springhack.util.DateFormatter;
 
@@ -49,6 +50,7 @@ public class AppointmentMapper {
                 .symptoms(SymptomMapper.toAppointmentDetailSymptoms(appointment.getSymptoms()))
                 .diagnosis(DiagnosisMapper.toAppointmentDetailDiagnoses(appointment.getDiagnosis()))
                 .examinations(ExaminationMapper.toListOfExaminationResponse(appointment.getExaminations()))
+                .medicines(MedicineMapper.getEmptyListOfMedicineResponse())
                 .build();
     }
 

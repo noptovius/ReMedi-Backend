@@ -19,6 +19,6 @@ public class AppointmentResponse {
     private List<SymptomResponse> symptoms;
     private List<DiagnosisResponse> diagnosis;
     private List<ExaminationListResponse> examinations;
-//    private List<AppointmentDetailMedicine> medicines;
+    private List<MedicineListResponse> medicines;
 
 }
