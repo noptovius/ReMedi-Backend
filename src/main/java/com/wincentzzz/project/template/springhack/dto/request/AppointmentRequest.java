@@ -21,6 +21,7 @@ public class AppointmentRequest {
     private List<AppointmentDiagnosis> diagnoses;
 //    private String medicines;
     private Boolean isFinished;
+    private Boolean isPaired;
     private String heartRate;
     private String bloodPressure;
     private String temperature;

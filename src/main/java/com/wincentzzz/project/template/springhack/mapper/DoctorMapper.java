@@ -17,6 +17,7 @@ public class DoctorMapper {
                 .photo(doctor.getPhoto())
                 .location(doctor.getLocation())
                 .rating(doctor.getRating())
+                .specialization(doctor.getSpecialization())
                 .build())
                 .collect(Collectors.toList());
     }
@@ -29,6 +30,7 @@ public class DoctorMapper {
                 .dob(doctor.getDob())
                 .phoneNumber(doctor.getPhoneNumber())
                 .email(doctor.getEmail())
+                .specialization(doctor.getSpecialization())
                 .location(doctor.getLocation())
                 .rating(doctor.getRating())
                 .build();

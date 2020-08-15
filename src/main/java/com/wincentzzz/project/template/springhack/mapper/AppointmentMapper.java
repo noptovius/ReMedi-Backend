@@ -14,14 +14,18 @@ import java.util.stream.Collectors;
 public class AppointmentMapper {
 
     public static AppointmentListResponse toAllAppointmentsListResponse(List<Appointment> appointments){
+
         return AppointmentListResponse.builder()
                 .appointmentList(appointments.stream()
                         .map(appointment -> AppointmentListItem.builder()
                                 .id(appointment.getId())
+                                .isPaired(appointment.getIsPaired())
                                 .date(DateFormatter.toDateString(appointment.getDate()))
                                 .doctorName(appointment.getDoctor().getName())
+                                .doctorSpecialization(appointment.getDoctor().getSpecialization())
                                 .hospitalName(appointment.getHospital().getName())
-                                .build()).collect(Collectors.toList()))
+                                .build())
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -34,8 +38,10 @@ public class AppointmentMapper {
                 .appointmentList(appointments.stream()
                         .map(appointment -> AppointmentListItem.builder()
                                 .id(appointment.getId())
+                                .isPaired(appointment.getIsPaired())
                                 .date(DateFormatter.toDateString(appointment.getDate()))
                                 .doctorName(appointment.getDoctor().getName())
+                                .doctorSpecialization(appointment.getDoctor().getSpecialization())
                                 .hospitalName(appointment.getHospital().getName())
                                 .build()).collect(Collectors.toList()))
                 .build();
@@ -44,7 +50,9 @@ public class AppointmentMapper {
     public static AppointmentResponse toAppointmentDetailResponse(Appointment appointment){
         return AppointmentResponse.builder()
                 .id(appointment.getId())
+                .isPaired(appointment.getIsPaired())
                 .doctorName(appointment.getDoctor().getName())
+                .doctorSpecialization(appointment.getDoctor().getSpecialization())
                 .hospitalName(appointment.getHospital().getName())
                 .date(DateFormatter.toDateString(appointment.getDate()))
                 .symptoms(SymptomMapper.toAppointmentDetailSymptoms(appointment.getSymptoms()))
@@ -66,6 +74,7 @@ public class AppointmentMapper {
                 .bloodPressure(appointmentRequest.getBloodPressure())
                 .temperature(appointmentRequest.getTemperature())
                 .heartRate(appointmentRequest.getHeartRate())
+                .isPaired(false)
                 .build();
     }
 
@@ -82,6 +91,18 @@ public class AppointmentMapper {
                 .bloodPressure(appointmentRequest.getBloodPressure())
                 .temperature(appointmentRequest.getTemperature())
                 .heartRate(appointmentRequest.getHeartRate())
+                .isPaired(appointmentRequest.getIsPaired())
                 .build();
+    }
+
+    public static Appointment toFinishedAppointment(AppointmentRequest appointmentRequest, Appointment appointment){
+        appointment.setIsFinished(appointmentRequest.getIsFinished());
+        appointment.setBloodPressure(appointmentRequest.getBloodPressure());
+        appointment.setHeartRate(appointmentRequest.getHeartRate());
+        appointment.setTemperature(appointmentRequest.getTemperature());
+        appointment.setDiagnosis(DiagnosisMapper.toAppointmentDiagnosisString(appointmentRequest.getDiagnoses()));
+        appointment.setSymptoms(SymptomMapper.toAppointmentSymptomString(appointmentRequest.getSymptoms()));
+
+        return appointment;
     }
 }

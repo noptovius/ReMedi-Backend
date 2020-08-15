@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/appointment")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AppointmentController {
 
     private static final int itemsPerPage = 10;
@@ -83,19 +84,57 @@ public class AppointmentController {
     }
 
     @PostMapping
-    public void addAppointment(@RequestBody AppointmentRequest appointmentRequest) {
+    public BaseResponse<Void> addAppointment(@RequestBody AppointmentRequest appointmentRequest) {
         Appointment appointment = AppointmentMapper.toAppointment(appointmentRequest);
         appointmentService.addAppointment(appointment);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
     }
 
     @PutMapping("/{id}")
-    public void updateAppointment(@PathVariable Long id, @RequestBody AppointmentRequest appointmentRequest) {
+    public BaseResponse<Void> updateAppointment(@PathVariable Long id,
+                                             @RequestBody AppointmentRequest appointmentRequest) {
         Appointment appointment = AppointmentMapper.toAppointment(appointmentRequest, id);
         appointmentService.updateAppointment(id, appointment);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
     }
 
+
+
     @DeleteMapping("/{id}")
-    public void deleteAppointment(@PathVariable Long id) {
+    public BaseResponse<Void> deleteAppointment(@PathVariable Long id) {
         appointmentService.deleteAppointment(id);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
+    }
+
+    @PutMapping("/{id}/pairing")
+    public BaseResponse<Void> updateAppointmentPairing(@PathVariable Long id,
+                                                       @RequestBody Boolean isPaired){
+        Appointment appointment = appointmentService.getAppointment(id);
+        appointment.setIsPaired(isPaired);
+        appointmentService.updateAppointment(id, appointment);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
+    }
+
+    @PutMapping("/{id}/record")
+    public BaseResponse<Void> updateAppointmentToFinished(@PathVariable Long id,
+                                                      @RequestBody AppointmentRequest appointmentRequest){
+        Appointment appointment = appointmentService.getAppointment(id);
+        appointmentService.updateAppointment(id, appointment);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
     }
 }

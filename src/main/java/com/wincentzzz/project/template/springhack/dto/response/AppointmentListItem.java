@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AppointmentListItem {
     private Long id;
+    private Boolean isPaired;
     private String doctorName;
+    private String doctorSpecialization;
     private String hospitalName;
     private String date;
 }

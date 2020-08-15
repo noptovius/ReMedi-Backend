@@ -12,9 +12,12 @@ public class SymptomMapper {
 
     public static List<SymptomResponse> toAppointmentDetailSymptoms(String symptoms){
         List<SymptomResponse> symptomResponses = new ArrayList<>();
-
         final int symptomIdIndex = 0;
         final int symptomNameIndex = 1;
+
+        if(symptoms == null || symptoms.isEmpty()){
+            return symptomResponses;
+        }
         
         String[] splitSymptoms = symptoms.split(symptomDelimiter);
         for (String splitSymptom: splitSymptoms) {
@@ -32,6 +35,10 @@ public class SymptomMapper {
 
     public static String toAppointmentSymptomString(List<AppointmentSymptom> appointmentSymptoms){
         List<String> appointmentSymptomStrings = new ArrayList<>();
+
+        if(appointmentSymptoms == null){
+            return "";
+        }
 
         for(AppointmentSymptom appointmentSymptom : appointmentSymptoms){
             appointmentSymptomStrings.add(appointmentSymptom.getId() + symptomDetailDelimiter +
