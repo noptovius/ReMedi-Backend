@@ -3,7 +3,6 @@ package com.wincentzzz.project.template.springhack.mapper;
 import com.wincentzzz.project.template.springhack.dto.request.DoctorRequest;
 import com.wincentzzz.project.template.springhack.dto.response.DoctorListResponse;
 import com.wincentzzz.project.template.springhack.dto.response.DoctorResponse;
-import com.wincentzzz.project.template.springhack.dto.response.PatientResponse;
 import com.wincentzzz.project.template.springhack.models.Doctor;
 
 import java.util.List;

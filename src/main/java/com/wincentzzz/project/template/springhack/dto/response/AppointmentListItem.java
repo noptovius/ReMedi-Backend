@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PageResponse {
-    private Integer pageNumber;
-    private Integer totalElements;
-    private Integer totalPage;
+public class AppointmentListItem {
+    private Long id;
+    private String doctorName;
+    private String hospitalName;
+    private String date;
 }

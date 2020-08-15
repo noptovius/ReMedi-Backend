@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PageResponse {
-    private Integer pageNumber;
-    private Integer totalElements;
-    private Integer totalPage;
+public class AppointmentDetailDiagnosis {
+    private Long id;
+    private String name;
 }

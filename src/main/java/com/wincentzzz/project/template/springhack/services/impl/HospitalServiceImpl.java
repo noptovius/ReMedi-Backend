@@ -14,17 +14,14 @@ public class HospitalServiceImpl implements HospitalService {
     @Autowired
     private HospitalRepository hospitalRepository;
 
-
     @Override
     public List<Hospital> getAllHospitals() {
-        List<Hospital> hospitals = hospitalRepository.findAll();
-        return hospitals;
+        return hospitalRepository.findAll();
     }
 
     @Override
     public Hospital getHospital(Long id) {
-        Hospital hospital = hospitalRepository.findById(id).get();
-        return hospital;
+        return hospitalRepository.findById(id).get();
     }
 
     @Override
