@@ -15,4 +15,5 @@ public class DoctorListResponse {
     private String photo;
     private String location;
     private Float rating;
+    private String specialization;
 }

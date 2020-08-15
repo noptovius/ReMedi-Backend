@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/doctors")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DoctorController {
 
     @Autowired
@@ -47,19 +48,31 @@ public class DoctorController {
     }
 
     @PostMapping
-    public void addDoctor(@RequestBody DoctorRequest doctorRequest){
+    public BaseResponse<Void> addDoctor(@RequestBody DoctorRequest doctorRequest){
         Doctor patient = DoctorMapper.toDoctor(doctorRequest);
         doctorService.addDoctor(patient);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
     }
 
     @PutMapping("/{id}")
-    public void updateDoctor(@PathVariable Long id, @RequestBody DoctorRequest doctorRequest){
+    public BaseResponse<Void> updateDoctor(@PathVariable Long id, @RequestBody DoctorRequest doctorRequest){
         Doctor doctor = DoctorMapper.toDoctor(doctorRequest);
         doctorService.updateDoctor(id, doctor);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDoctor(@PathVariable Long id){
+    public BaseResponse<Void> deleteDoctor(@PathVariable Long id){
         doctorService.deleteDoctor(id);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
     }
 }

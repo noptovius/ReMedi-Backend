@@ -20,5 +20,6 @@ public class DoctorResponse {
     private String email;
     private String location;
     private Float rating;
+    private String specialization;
     private Integer totalAppointments;
 }

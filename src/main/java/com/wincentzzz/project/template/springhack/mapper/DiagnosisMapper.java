@@ -11,27 +11,34 @@ public class DiagnosisMapper {
     private static final String diagnosisDetailDelimiter = "#";
 
     public static List<DiagnosisResponse> toAppointmentDetailDiagnoses(String diagnoses){
-        List<DiagnosisResponse> appointmentDetailDiagnoses = new ArrayList<>();
-
+        List<DiagnosisResponse> diagnosisResponse = new ArrayList<>();
         final int diagnosisIdIndex = 0;
         final int diagnosisNameIndex = 1;
+
+        if(diagnoses == null || diagnoses.isEmpty()){
+            return diagnosisResponse;
+        }
 
         String[] splitDiagnoses = diagnoses.split(diagnosisDelimiter);
         for (String splitDiagnosis: splitDiagnoses) {
 
             String[] splitDiagnosisDetails = splitDiagnosis.split(diagnosisDetailDelimiter);
 
-            appointmentDetailDiagnoses.add(DiagnosisResponse.builder()
+            diagnosisResponse.add(DiagnosisResponse.builder()
                     .id(Long.valueOf(splitDiagnosisDetails[diagnosisIdIndex]))
                     .name(splitDiagnosisDetails[diagnosisNameIndex])
                     .build());
         }
 
-        return appointmentDetailDiagnoses;
+        return diagnosisResponse;
     }
 
     public static String toAppointmentDiagnosisString(List<AppointmentDiagnosis> appointmentDiagnoses){
         List<String> appointmentDiagnosisStrings = new ArrayList<>();
+
+        if(appointmentDiagnoses == null){
+            return "";
+        }
 
         for(AppointmentDiagnosis appointmentDiagnosis : appointmentDiagnoses){
             appointmentDiagnosisStrings.add(appointmentDiagnosis.getId() + diagnosisDetailDelimiter +
