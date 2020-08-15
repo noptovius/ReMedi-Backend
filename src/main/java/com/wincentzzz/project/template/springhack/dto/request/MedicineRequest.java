@@ -1,4 +1,4 @@
-package com.wincentzzz.project.template.springhack.dto.response;
+package com.wincentzzz.project.template.springhack.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MedicineListResponse {
-    private Long id;
+public class MedicineRequest {
     private String name;
 }

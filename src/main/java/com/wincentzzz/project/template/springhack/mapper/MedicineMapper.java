@@ -1,10 +1,13 @@
 package com.wincentzzz.project.template.springhack.mapper;
 
+import com.wincentzzz.project.template.springhack.dto.request.MedicineRequest;
 import com.wincentzzz.project.template.springhack.dto.response.MedicineListResponse;
+import com.wincentzzz.project.template.springhack.dto.response.MedicineResponse;
+import com.wincentzzz.project.template.springhack.models.Medicine;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MedicineMapper {
 
@@ -16,16 +19,24 @@ public class MedicineMapper {
         return Arrays.asList(medicineListResponses);
     }
 
-    public static List<MedicineListResponse> getDummyListOfMedicineResponse(){
-        MedicineListResponse[] medicineListResponses = new MedicineListResponse[] {
-                MedicineListResponse.builder().id((long) 1)
-                    .name("Paracetamol")
-                    .weight("50 mg").build(),
-                MedicineListResponse.builder().id((long) 2)
-                        .name("Paracetamol 2")
-                        .weight("25 mg").build(),
-        };
+    public static List<MedicineListResponse> toMedicinelistResponse(List<Medicine> medicines){
+        return medicines.stream().map(medicine -> MedicineListResponse.builder()
+                .id(medicine.getId())
+                .name(medicine.getName())
+                .build())
+                .collect(Collectors.toList());
+    }
 
-        return Arrays.asList(medicineListResponses);
+    public static MedicineResponse toMedicineResponse(Medicine medicine){
+        return MedicineResponse.builder()
+                .id(medicine.getId())
+                .name(medicine.getName())
+                .build();
+    }
+
+    public static Medicine toMedicine(MedicineRequest medicineRequest){
+        return Medicine.builder()
+                .name(medicineRequest.getName())
+                .build();
     }
 }

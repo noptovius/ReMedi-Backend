@@ -43,6 +43,7 @@ public class DoctorController {
     public BaseResponse<DoctorResponse> getDoctor(@PathVariable Long id){
         DoctorResponse doctor = DoctorMapper.toDoctorResponse(doctorService.getDoctor(id));
         return BaseResponse.<DoctorResponse>builder()
+                .code(200)
                 .data(doctor)
                 .build();
     }
