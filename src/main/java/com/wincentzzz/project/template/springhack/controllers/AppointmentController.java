@@ -1,5 +1,7 @@
 package com.wincentzzz.project.template.springhack.controllers;
 
+import com.wincentzzz.project.template.springhack.dto.request.AppointmentFinishingRequest;
+import com.wincentzzz.project.template.springhack.dto.request.AppointmentPairingRequest;
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentRequest;
 import com.wincentzzz.project.template.springhack.dto.response.*;
 import com.wincentzzz.project.template.springhack.mapper.AppointmentMapper;
@@ -96,15 +98,15 @@ public class AppointmentController {
     @PutMapping("/{id}")
     public BaseResponse<Void> updateAppointment(@PathVariable Long id,
                                              @RequestBody AppointmentRequest appointmentRequest) {
-        Appointment appointment = AppointmentMapper.toAppointment(appointmentRequest, id);
+        Appointment appointment = appointmentService.getAppointment(id);
+        appointment = AppointmentMapper.toUpdatedAppointment(appointmentRequest, appointment);
+
         appointmentService.updateAppointment(id, appointment);
 
         return BaseResponse.<Void>builder()
                 .code(200)
                 .build();
     }
-
-
 
     @DeleteMapping("/{id}")
     public BaseResponse<Void> deleteAppointment(@PathVariable Long id) {
@@ -116,10 +118,10 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}/pairing")
-    public BaseResponse<Void> updateAppointmentPairing(@PathVariable Long id,
-                                                       @RequestBody Boolean isPaired){
+    public BaseResponse<Void> updateAppointmentToPaired(@PathVariable Long id,
+                                                        @RequestBody AppointmentPairingRequest appointmentRequest){
         Appointment appointment = appointmentService.getAppointment(id);
-        appointment.setIsPaired(isPaired);
+        appointment = AppointmentMapper.toPairedAppointment(appointmentRequest, appointment);
         appointmentService.updateAppointment(id, appointment);
 
         return BaseResponse.<Void>builder()
@@ -129,8 +131,9 @@ public class AppointmentController {
 
     @PutMapping("/{id}/record")
     public BaseResponse<Void> updateAppointmentToFinished(@PathVariable Long id,
-                                                      @RequestBody AppointmentRequest appointmentRequest){
+                                                      @RequestBody AppointmentFinishingRequest appointmentRequest){
         Appointment appointment = appointmentService.getAppointment(id);
+        appointment = AppointmentMapper.toFinishedAppointment(appointmentRequest, appointment);
         appointmentService.updateAppointment(id, appointment);
 
         return BaseResponse.<Void>builder()

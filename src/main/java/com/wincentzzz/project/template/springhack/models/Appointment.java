@@ -40,13 +40,14 @@ public class Appointment {
     @Column(name="symptoms")
     private String symptoms;
 
+
     @Column(name="diagnosis")
     private String diagnosis;
 
     @Column(name="drug_prescription")
     private String drugPrescription;
 
-    @Column(name="is_finished")
+    @Column(name="is_finished", columnDefinition = "Boolean default false")
     private Boolean isFinished;
 
     @Column(name="heart_rate")
