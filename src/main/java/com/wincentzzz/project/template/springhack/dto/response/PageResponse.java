@@ -5,17 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DoctorListResponse {
-    private Long id;
-    private String name;
-    private String photo;
-    private String location;
-    private Float rating;
+public class PageResponse {
+    private Integer pageNumber;
+    private Integer pageSize;
+    private Integer totalPage;
 }

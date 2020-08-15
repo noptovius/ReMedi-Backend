@@ -2,34 +2,48 @@ package com.wincentzzz.project.template.springhack.controllers;
 
 import com.wincentzzz.project.template.springhack.dto.request.DoctorRequest;
 import com.wincentzzz.project.template.springhack.dto.request.PatientRequest;
-import com.wincentzzz.project.template.springhack.dto.response.DoctorListResponse;
-import com.wincentzzz.project.template.springhack.dto.response.PatientListResponse;
-import com.wincentzzz.project.template.springhack.dto.response.PatientResponse;
+import com.wincentzzz.project.template.springhack.dto.response.*;
 import com.wincentzzz.project.template.springhack.mapper.DoctorMapper;
 import com.wincentzzz.project.template.springhack.mapper.PatientMapper;
 import com.wincentzzz.project.template.springhack.models.Doctor;
 import com.wincentzzz.project.template.springhack.models.Patient;
 import com.wincentzzz.project.template.springhack.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/doctor")
+@RequestMapping(value = "/doctors")
 public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
 
     @GetMapping
-    public List<DoctorListResponse> getAllDoctors(){
-        return DoctorMapper.toDoctorlistResponse(doctorService.getAllDoctors());
+    public BaseResponse<List<DoctorListResponse>> getAllDoctors(@RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber,
+                                                  @RequestParam(value = "doctorName", required = false, defaultValue = "%") String doctorName,
+                                                  @RequestParam(value = "specialization", required = false, defaultValue = "%") String specialization){
+        Page<Doctor> doctorPage = doctorService.getAllDoctors(doctorName, specialization, pageNumber);
+        List<Doctor> doctors = doctorPage.getContent();
+        return BaseResponse.<List<DoctorListResponse>>builder()
+                .code(200)
+                .pageResponse(PageResponse.builder()
+                        .pageNumber(pageNumber)
+                        .pageSize(doctorPage.getSize())
+                        .totalPage(doctorPage.getTotalPages())
+                        .build())
+                .data(DoctorMapper.toDoctorlistResponse(doctors))
+                .build();
     }
 
     @GetMapping("/{id}")
-    public PatientResponse getDoctor(@PathVariable Long id){
-        return DoctorMapper.toDoctorResponse(doctorService.getDoctor(id));
+    public BaseResponse<DoctorResponse> getDoctor(@PathVariable Long id){
+        DoctorResponse doctor = DoctorMapper.toDoctorResponse(doctorService.getDoctor(id));
+        return BaseResponse.<DoctorResponse>builder()
+                .data(doctor)
+                .build();
     }
 
     @PostMapping
