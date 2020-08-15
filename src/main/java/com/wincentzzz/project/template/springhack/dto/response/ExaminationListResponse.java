@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AppointmentDetailDiagnosis {
+public class ExaminationListResponse {
     private Long id;
     private String name;
+    private String file;
 }

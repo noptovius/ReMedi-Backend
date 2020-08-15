@@ -11,13 +11,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AppointmentDetailResponse {
+public class AppointmentResponse {
     private Long id;
     private String doctorName;
     private String hospitalName;
     private String date;
-    private List<AppointmentDetailSymptom> symptoms;
-    private List<AppointmentDetailDiagnosis> diagnosis;
+    private List<SymptomResponse> symptoms;
+    private List<DiagnosisResponse> diagnosis;
+    private List<ExaminationListResponse> examinations;
 //    private List<AppointmentDetailMedicine> medicines;
-//    private List<AppointmentDetailExamination> examinations;
+
 }

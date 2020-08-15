@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -28,8 +29,8 @@ public class Appointment {
     @ManyToOne
     private Hospital hospital;
 
-//    @OneToMany
-//    private Medicine medicine;
+    @OneToMany
+    private List<Examination> examinations;
 
     @Column(name="date")
     private Date date;

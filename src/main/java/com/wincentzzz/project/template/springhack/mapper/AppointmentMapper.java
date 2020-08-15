@@ -1,13 +1,10 @@
 package com.wincentzzz.project.template.springhack.mapper;
 
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentRequest;
-import com.wincentzzz.project.template.springhack.dto.response.AppointmentDetailResponse;
+import com.wincentzzz.project.template.springhack.dto.response.AppointmentResponse;
 import com.wincentzzz.project.template.springhack.dto.response.AppointmentListItem;
 import com.wincentzzz.project.template.springhack.dto.response.AppointmentListResponse;
-import com.wincentzzz.project.template.springhack.models.Appointment;
-import com.wincentzzz.project.template.springhack.models.Doctor;
-import com.wincentzzz.project.template.springhack.models.Hospital;
-import com.wincentzzz.project.template.springhack.models.Patient;
+import com.wincentzzz.project.template.springhack.models.*;
 import com.wincentzzz.project.template.springhack.util.DateFormatter;
 
 import java.util.List;
@@ -43,22 +40,23 @@ public class AppointmentMapper {
                 .build();
     }
 
-    public static AppointmentDetailResponse toAppointmentDetailResponse(Appointment appointment){
-        return AppointmentDetailResponse.builder()
+    public static AppointmentResponse toAppointmentDetailResponse(Appointment appointment){
+        return AppointmentResponse.builder()
                 .id(appointment.getId())
                 .doctorName(appointment.getDoctor().getName())
                 .hospitalName(appointment.getHospital().getName())
                 .date(DateFormatter.toDateString(appointment.getDate()))
                 .symptoms(SymptomMapper.toAppointmentDetailSymptoms(appointment.getSymptoms()))
                 .diagnosis(DiagnosisMapper.toAppointmentDetailDiagnoses(appointment.getDiagnosis()))
+                .examinations(ExaminationMapper.toListOfExaminationResponse(appointment.getExaminations()))
                 .build();
     }
 
     public static Appointment toAppointment(AppointmentRequest appointmentRequest){
         return Appointment.builder()
-                .patient(Patient.builder().id(Long.valueOf(appointmentRequest.getPatientId())).build())
-                .doctor(Doctor.builder().id(Long.valueOf(appointmentRequest.getDoctorId())).build())
-                .hospital(Hospital.builder().id(Long.valueOf(appointmentRequest.getHospitalId())).build())
+                .patient(Patient.builder().id(appointmentRequest.getPatientId()).build())
+                .doctor(Doctor.builder().id(appointmentRequest.getDoctorId()).build())
+                .hospital(Hospital.builder().id(appointmentRequest.getHospitalId()).build())
                 .date(appointmentRequest.getDate())
                 .symptoms(SymptomMapper.toAppointmentSymptomString(appointmentRequest.getSymptoms()))
                 .diagnosis(DiagnosisMapper.toAppointmentDiagnosisString(appointmentRequest.getDiagnoses()))
@@ -72,9 +70,9 @@ public class AppointmentMapper {
     public static Appointment toAppointment(AppointmentRequest appointmentRequest, Long id){
         return Appointment.builder()
                 .id(id)
-                .patient(Patient.builder().id(Long.valueOf(appointmentRequest.getPatientId())).build())
-                .doctor(Doctor.builder().id(Long.valueOf(appointmentRequest.getDoctorId())).build())
-                .hospital(Hospital.builder().id(Long.valueOf(appointmentRequest.getHospitalId())).build())
+                .patient(Patient.builder().id(appointmentRequest.getPatientId()).build())
+                .doctor(Doctor.builder().id(appointmentRequest.getDoctorId()).build())
+                .hospital(Hospital.builder().id(appointmentRequest.getHospitalId()).build())
                 .date(appointmentRequest.getDate())
                 .symptoms(SymptomMapper.toAppointmentSymptomString(appointmentRequest.getSymptoms()))
                 .diagnosis(DiagnosisMapper.toAppointmentDiagnosisString(appointmentRequest.getDiagnoses()))
