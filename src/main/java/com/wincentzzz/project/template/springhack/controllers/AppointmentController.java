@@ -5,6 +5,7 @@ import com.wincentzzz.project.template.springhack.dto.request.AppointmentPairing
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentRequest;
 import com.wincentzzz.project.template.springhack.dto.response.*;
 import com.wincentzzz.project.template.springhack.mapper.AppointmentMapper;
+import com.wincentzzz.project.template.springhack.mapper.PageMapper;
 import com.wincentzzz.project.template.springhack.models.Appointment;
 import com.wincentzzz.project.template.springhack.services.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,18 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     @GetMapping
-    public BaseResponse<AppointmentListResponse> getAllAppointments() {
+    public BaseResponse<AppointmentListResponse> getAllAppointments(@RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber) {
+
+        Pageable pageable = PageRequest.of(pageNumber, itemsPerPage, Sort.by("date").descending());
+
+        Page<Appointment> appointmentPage = appointmentService.getAllAppointments(pageable);
+        List<Appointment> appointments = appointmentPage.getContent();
+        PageResponse pageResponse = PageMapper.toPageResponse(appointmentPage);
+
         return BaseResponse.<AppointmentListResponse>builder()
                 .code(200)
-                .data(AppointmentMapper.toAllAppointmentsListResponse(appointmentService.getAllAppointments()))
+                .paging(pageResponse)
+                .data(AppointmentMapper.toAllAppointmentsListResponse(appointments))
                 .build();
     }
 
@@ -40,13 +49,10 @@ public class AppointmentController {
                                         @RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber) {
 
         Pageable pageable = PageRequest.of(pageNumber, itemsPerPage, Sort.by("date").descending());
+
         Page<Appointment> appointmentPage = appointmentService.getScheduledAppointmentsByPatientId(patientId, pageable);
         List<Appointment> appointments = appointmentPage.getContent();
-
-        PageResponse pageResponse = PageResponse.builder()
-                .pageNumber(appointmentPage.getNumber())
-                .totalElements(appointmentPage.getNumberOfElements())
-                .totalPage(appointmentPage.getTotalPages()).build();
+        PageResponse pageResponse = PageMapper.toPageResponse(appointmentPage);
 
         return BaseResponse.<AppointmentListResponse>builder()
                 .code(200)
@@ -61,13 +67,10 @@ public class AppointmentController {
                                        @RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber) {
 
         Pageable pageable = PageRequest.of(pageNumber, itemsPerPage, Sort.by("date").descending());
+
         Page<Appointment> appointmentPage = appointmentService.getFinishedAppointmentsByPatientId(patientId, pageable);
         List<Appointment> appointments = appointmentPage.getContent();
-
-        PageResponse pageResponse = PageResponse.builder()
-                .pageNumber(appointmentPage.getNumber())
-                .totalElements(appointmentPage.getNumberOfElements())
-                .totalPage(appointmentPage.getTotalPages()).build();
+        PageResponse pageResponse = PageMapper.toPageResponse(appointmentPage);
 
         return BaseResponse.<AppointmentListResponse>builder()
                 .code(200)

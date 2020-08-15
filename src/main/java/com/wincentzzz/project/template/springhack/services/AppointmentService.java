@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface AppointmentService {
-    List<Appointment> getAllAppointments();
+    Page<Appointment> getAllAppointments(Pageable pageable);
     Appointment getAppointment(Long id);
     void addAppointment(Appointment appointment);
     void updateAppointment(Long id, Appointment appointment);

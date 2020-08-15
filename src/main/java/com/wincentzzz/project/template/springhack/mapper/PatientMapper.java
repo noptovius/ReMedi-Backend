@@ -4,6 +4,7 @@ import com.wincentzzz.project.template.springhack.dto.request.PatientRequest;
 import com.wincentzzz.project.template.springhack.dto.response.PatientListResponse;
 import com.wincentzzz.project.template.springhack.dto.response.PatientResponse;
 import com.wincentzzz.project.template.springhack.models.Patient;
+import com.wincentzzz.project.template.springhack.util.DateFormatter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class PatientMapper {
                 .nik(patient.getNik())
                 .name(patient.getName())
                 .photo(patient.getPhoto())
-                .dob(patient.getDob())
+                .dob(DateFormatter.toDateString(patient.getDob()))
                 .allergy(patient.getAllergy())
                 .phoneNumber(patient.getPhoneNumber())
                 .email(patient.getEmail())

@@ -16,7 +16,7 @@ public class PatientResponse {
     private String nik;
     private String name;
     private String photo;
-    private Date dob;
+    private String dob;
     private String allergy;
     private String phoneNumber;
     private String email;
