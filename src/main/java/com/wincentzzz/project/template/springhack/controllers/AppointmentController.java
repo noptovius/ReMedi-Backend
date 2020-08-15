@@ -79,6 +79,24 @@ public class AppointmentController {
                 .build();
     }
 
+    @GetMapping("/doctor/{doctorId}")
+    public BaseResponse<AppointmentListResponse> getAppointmentsByDoctorId(@PathVariable Long doctorId,
+                                                                           @RequestParam(value = "pageNumber",
+                                                                                   required = false, defaultValue = "0") Integer pageNumber){
+
+        Pageable pageable = PageRequest.of(pageNumber, itemsPerPage, Sort.by("date").descending());
+
+        Page<Appointment> appointmentPage = appointmentService.getAppointmentsByDoctorId(doctorId, pageable);
+        List<Appointment> appointments = appointmentPage.getContent();
+        PageResponse pageResponse = PageMapper.toPageResponse(appointmentPage);
+
+        return BaseResponse.<AppointmentListResponse>builder()
+                .code(200)
+                .paging(pageResponse)
+                .data(AppointmentMapper.toAppointmentListResponse(appointments))
+                .build();
+    }
+
 
     @GetMapping("/{id}")
     public BaseResponse<AppointmentResponse> getAppointment(@PathVariable Long id) {

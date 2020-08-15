@@ -53,4 +53,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository
                 .findAppointmentsByPatientIdAndIsFinishedFalse(patientId, pageable);
     }
+
+    @Override
+    public Page<Appointment> getAppointmentsByDoctorId(Long doctorId, Pageable pageable) {
+        return appointmentRepository.findAppointmentsByDoctorId(doctorId, pageable);
+    }
 }

@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     Page<Appointment> findAppointmentsByPatientIdAndIsFinishedTrue(Long patientId, Pageable pageable);
     Page<Appointment> findAppointmentsByPatientIdAndIsFinishedFalse(Long patientId, Pageable pageable);
+    Page<Appointment> findAppointmentsByDoctorId(Long doctorId, Pageable pageable);
 }
