@@ -17,5 +17,5 @@ public class AppointmentListResponse {
     private String heartRate;
     private String bloodPressure;
     private String temperature;
-    private List<AppointmentListItem> appointmentList;
+    private List<AppointmentListGroup> appointmentListGroups;
 }
