@@ -3,49 +3,92 @@ package com.wincentzzz.project.template.springhack.mapper;
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentFinishingRequest;
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentPairingRequest;
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentRequest;
-import com.wincentzzz.project.template.springhack.dto.response.AppointmentResponse;
-import com.wincentzzz.project.template.springhack.dto.response.AppointmentListItem;
-import com.wincentzzz.project.template.springhack.dto.response.AppointmentListResponse;
-import com.wincentzzz.project.template.springhack.dto.response.MedicineListResponse;
+import com.wincentzzz.project.template.springhack.dto.response.*;
 import com.wincentzzz.project.template.springhack.models.*;
 import com.wincentzzz.project.template.springhack.util.DateFormatter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.wincentzzz.project.template.springhack.util.DateFormatter.getMonth;
 
 public class AppointmentMapper {
 
     public static AppointmentListResponse toAllAppointmentsListResponse(List<Appointment> appointments){
 
+        List<AppointmentListGroup> appointmentListGroups = new ArrayList<>();
+        Integer currentMonth = 0;
+        List<String> months = new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEC"));
+        for(Integer i = 0 ; i < appointments.size() ; i++) {
+            Appointment appointment = appointments.get(i);
+            Integer month = getMonth(appointment.getDate());
+            if(!currentMonth.equals(month)) {
+                currentMonth = month;
+                AppointmentListGroup appointmentListGroup = AppointmentListGroup.builder()
+                        .month(months.get(currentMonth - 1))
+                        .appointmentListItems(new ArrayList<>())
+                        .build();
+                appointmentListGroups.add(appointmentListGroup);
+            }
+
+            AppointmentListGroup appointmentListGroup = appointmentListGroups.get(appointmentListGroups.size() - 1);
+            AppointmentListItem appointmentListitem = AppointmentListItem.builder()
+                    .id(appointment.getId())
+                    .isPaired(appointment.getIsPaired())
+                    .date(DateFormatter.toDateString(appointment.getDate()))
+                    .doctorName(appointment.getDoctor().getName())
+                    .doctorSpecialization(appointment.getDoctor().getSpecialization())
+                    .hospitalName(appointment.getHospital().getName())
+                    .build();
+            appointmentListGroup.getAppointmentListItems().add(appointmentListitem);
+
+        }
+
         return AppointmentListResponse.builder()
-                .appointmentList(appointments.stream()
-                        .map(appointment -> AppointmentListItem.builder()
-                                .id(appointment.getId())
-                                .isPaired(appointment.getIsPaired())
-                                .date(DateFormatter.toDateString(appointment.getDate()))
-                                .doctorName(appointment.getDoctor().getName())
-                                .doctorSpecialization(appointment.getDoctor().getSpecialization())
-                                .hospitalName(appointment.getHospital().getName())
-                                .build())
-                        .collect(Collectors.toList()))
+                .appointmentListGroups(appointmentListGroups)
                 .build();
     }
 
     public static AppointmentListResponse toAppointmentListResponse(List<Appointment> appointments){
         Appointment latestAppointment = appointments.get(0);
+        List<AppointmentListGroup> appointmentListGroups = new ArrayList<>();
+
+        Integer currentMonth = 0;
+
+        List<String> months = new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEC"));
+
+        for(Integer i = 0 ; i < appointments.size() ; i++) {
+            Appointment appointment = appointments.get(i);
+            Integer month = getMonth(appointment.getDate());
+            if(!currentMonth.equals(month)) {
+                currentMonth = month;
+                AppointmentListGroup appointmentListGroup = AppointmentListGroup.builder()
+                        .month(months.get(currentMonth - 1))
+                        .appointmentListItems(new ArrayList<>())
+                        .build();
+                appointmentListGroups.add(appointmentListGroup);
+            }
+
+            AppointmentListGroup appointmentListGroup = appointmentListGroups.get(appointmentListGroups.size() - 1);
+            AppointmentListItem appointmentListitem = AppointmentListItem.builder()
+                    .id(appointment.getId())
+                    .isPaired(appointment.getIsPaired())
+                    .date(DateFormatter.toDateString(appointment.getDate()))
+                    .doctorName(appointment.getDoctor().getName())
+                    .doctorSpecialization(appointment.getDoctor().getSpecialization())
+                    .hospitalName(appointment.getHospital().getName())
+                    .build();
+            appointmentListGroup.getAppointmentListItems().add(appointmentListitem);
+
+        }
+
         return AppointmentListResponse.builder()
                 .bloodPressure(latestAppointment.getBloodPressure())
                 .heartRate(latestAppointment.getHeartRate())
                 .temperature(latestAppointment.getTemperature())
-                .appointmentList(appointments.stream()
-                        .map(appointment -> AppointmentListItem.builder()
-                                .id(appointment.getId())
-                                .isPaired(appointment.getIsPaired())
-                                .date(DateFormatter.toDateString(appointment.getDate()))
-                                .doctorName(appointment.getDoctor().getName())
-                                .doctorSpecialization(appointment.getDoctor().getSpecialization())
-                                .hospitalName(appointment.getHospital().getName())
-                                .build()).collect(Collectors.toList()))
+                .appointmentListGroups(appointmentListGroups)
                 .build();
     }
 
