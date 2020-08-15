@@ -1,5 +1,7 @@
 package com.wincentzzz.project.template.springhack.mapper;
 
+import com.wincentzzz.project.template.springhack.dto.request.AppointmentFinishingRequest;
+import com.wincentzzz.project.template.springhack.dto.request.AppointmentPairingRequest;
 import com.wincentzzz.project.template.springhack.dto.request.AppointmentRequest;
 import com.wincentzzz.project.template.springhack.dto.response.AppointmentResponse;
 import com.wincentzzz.project.template.springhack.dto.response.AppointmentListItem;
@@ -51,6 +53,7 @@ public class AppointmentMapper {
         return AppointmentResponse.builder()
                 .id(appointment.getId())
                 .isPaired(appointment.getIsPaired())
+                .isFinished(appointment.getIsFinished())
                 .doctorName(appointment.getDoctor().getName())
                 .doctorSpecialization(appointment.getDoctor().getSpecialization())
                 .hospitalName(appointment.getHospital().getName())
@@ -68,40 +71,34 @@ public class AppointmentMapper {
                 .doctor(Doctor.builder().id(appointmentRequest.getDoctorId()).build())
                 .hospital(Hospital.builder().id(appointmentRequest.getHospitalId()).build())
                 .date(appointmentRequest.getDate())
-                .symptoms(SymptomMapper.toAppointmentSymptomString(appointmentRequest.getSymptoms()))
-                .diagnosis(DiagnosisMapper.toAppointmentDiagnosisString(appointmentRequest.getDiagnoses()))
-                .isFinished(appointmentRequest.getIsFinished())
-                .bloodPressure(appointmentRequest.getBloodPressure())
-                .temperature(appointmentRequest.getTemperature())
-                .heartRate(appointmentRequest.getHeartRate())
                 .isPaired(false)
+                .isFinished(false)
                 .build();
     }
 
-    public static Appointment toAppointment(AppointmentRequest appointmentRequest, Long id){
-        return Appointment.builder()
-                .id(id)
-                .patient(Patient.builder().id(appointmentRequest.getPatientId()).build())
-                .doctor(Doctor.builder().id(appointmentRequest.getDoctorId()).build())
-                .hospital(Hospital.builder().id(appointmentRequest.getHospitalId()).build())
-                .date(appointmentRequest.getDate())
-                .symptoms(SymptomMapper.toAppointmentSymptomString(appointmentRequest.getSymptoms()))
-                .diagnosis(DiagnosisMapper.toAppointmentDiagnosisString(appointmentRequest.getDiagnoses()))
-                .isFinished(appointmentRequest.getIsFinished())
-                .bloodPressure(appointmentRequest.getBloodPressure())
-                .temperature(appointmentRequest.getTemperature())
-                .heartRate(appointmentRequest.getHeartRate())
-                .isPaired(appointmentRequest.getIsPaired())
-                .build();
+    public static Appointment toUpdatedAppointment(AppointmentRequest appointmentRequest, Appointment appointment){
+        appointment.setPatient(Patient.builder().id(appointmentRequest.getPatientId()).build());
+        appointment.setDoctor(Doctor.builder().id(appointmentRequest.getDoctorId()).build());
+        appointment.setHospital(Hospital.builder().id(appointmentRequest.getHospitalId()).build());
+        appointment.setDate(appointmentRequest.getDate());
+
+        return appointment;
     }
 
-    public static Appointment toFinishedAppointment(AppointmentRequest appointmentRequest, Appointment appointment){
+    public static Appointment toFinishedAppointment(AppointmentFinishingRequest appointmentRequest, Appointment appointment){
         appointment.setIsFinished(appointmentRequest.getIsFinished());
         appointment.setBloodPressure(appointmentRequest.getBloodPressure());
         appointment.setHeartRate(appointmentRequest.getHeartRate());
         appointment.setTemperature(appointmentRequest.getTemperature());
         appointment.setDiagnosis(DiagnosisMapper.toAppointmentDiagnosisString(appointmentRequest.getDiagnoses()));
         appointment.setSymptoms(SymptomMapper.toAppointmentSymptomString(appointmentRequest.getSymptoms()));
+
+        return appointment;
+    }
+
+    public static Appointment toPairedAppointment(AppointmentPairingRequest appointmentRequest,
+                                                  Appointment appointment){
+        appointment.setIsPaired(appointmentRequest.getIsPaired());
 
         return appointment;
     }

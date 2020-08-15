@@ -14,6 +14,7 @@ import java.util.List;
 public class AppointmentResponse {
     private Long id;
     private Boolean isPaired;
+    private Boolean isFinished;
     private String doctorName;
     private String doctorSpecialization;
     private String hospitalName;
