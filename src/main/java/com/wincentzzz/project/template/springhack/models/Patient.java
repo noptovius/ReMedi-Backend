@@ -45,4 +45,7 @@ public class Patient {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "unlock")
+    private Boolean unlock;
 }

@@ -7,6 +7,7 @@ import com.wincentzzz.project.template.springhack.models.Patient;
 import com.wincentzzz.project.template.springhack.util.DateFormatter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PatientMapper {
@@ -35,6 +36,7 @@ public class PatientMapper {
                 .allergy(patient.getAllergy())
                 .phoneNumber(patient.getPhoneNumber())
                 .email(patient.getEmail())
+                .unlock(Optional.ofNullable(patient.getUnlock()).orElse(false))
                 .build();
     }
 

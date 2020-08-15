@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -37,5 +38,18 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
+    }
+
+    @Override
+    public void unlockPatient(Long id) {
+        Optional<Patient> patient = patientRepository.findById(id);
+        if(patient.isPresent()) {
+            Patient patientData = patient.get();
+            if(patientData.getUnlock()) {
+                patientData.setUnlock(false);
+            } else {
+                patientData.setUnlock(true);
+            }
+        }
     }
 }

@@ -20,4 +20,5 @@ public class PatientResponse {
     private String allergy;
     private String phoneNumber;
     private String email;
+    private Boolean unlock;
 }

@@ -64,4 +64,14 @@ public class PatientController {
                 .code(200)
                 .build();
     }
+
+    @PatchMapping("/{id}/unlock")
+    public BaseResponse<Void> unlockPatient(@PathVariable Long id, @RequestBody PatientRequest patientRequest){
+        Patient patient = PatientMapper.toPatient(patientRequest, id);
+        patientService.updatePatient(id, patient);
+
+        return BaseResponse.<Void>builder()
+                .code(200)
+                .build();
+    }
 }
