@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class MedicineResponse {
     private Long id;
     private String name;
-    private String weight;
 }
