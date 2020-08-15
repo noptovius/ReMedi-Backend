@@ -12,15 +12,17 @@ public class HospitalMapper {
 
     public static List<HospitalListResponse> toListOfHospitalResponse(List<Hospital> hospitals){
         return hospitals.stream().map(hospital -> HospitalListResponse.builder()
-            .name(hospital.getName())
-            .address(hospital.getAddress())
-            .city(hospital.getCity())
-            .build())
-            .collect(Collectors.toList());
+                .id(hospital.getId())
+                .name(hospital.getName())
+                .address(hospital.getAddress())
+                .city(hospital.getCity())
+                .build())
+                .collect(Collectors.toList());
     }
 
     public static HospitalResponse toHospitalResponse(Hospital hospital){
         return HospitalResponse.builder()
+                .id(hospital.getId())
                 .name(hospital.getName())
                 .address(hospital.getAddress())
                 .city(hospital.getCity())

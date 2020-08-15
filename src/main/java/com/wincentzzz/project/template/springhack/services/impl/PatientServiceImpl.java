@@ -16,14 +16,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> getAllPatients() {
-        List<Patient> patients = patientRepository.findAll();
-        return patients;
+        return patientRepository.findAll();
     }
 
     @Override
     public Patient getPatient(Long id) {
-        Patient patient = patientRepository.findById(id).get();
-        return patient;
+        return patientRepository.findById(id).get();
     }
 
     @Override
