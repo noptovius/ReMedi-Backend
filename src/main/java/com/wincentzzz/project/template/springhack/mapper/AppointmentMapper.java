@@ -20,7 +20,8 @@ public class AppointmentMapper {
 
         List<AppointmentListGroup> appointmentListGroups = new ArrayList<>();
         Integer currentMonth = 0;
-        List<String> months = new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEC"));
+        List<String> months = new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
+                "AUG", "SEP", "OCT", "NOV", "DEC"));
         for(Integer i = 0 ; i < appointments.size() ; i++) {
             Appointment appointment = appointments.get(i);
             Integer month = getMonth(appointment.getDate());
@@ -57,7 +58,8 @@ public class AppointmentMapper {
 
         Integer currentMonth = 0;
 
-        List<String> months = new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEC"));
+        List<String> months = new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
+                "AUG", "SEP", "OCT", "NOV", "DEC"));
 
         for(Integer i = 0 ; i < appointments.size() ; i++) {
             Appointment appointment = appointments.get(i);
@@ -104,7 +106,13 @@ public class AppointmentMapper {
                 .symptoms(SymptomMapper.toAppointmentDetailSymptoms(appointment.getSymptoms()))
                 .diagnosis(DiagnosisMapper.toAppointmentDetailDiagnoses(appointment.getDiagnosis()))
                 .examinations(ExaminationMapper.toListOfExaminationResponse(appointment.getExaminations()))
-                .medicines(MedicineMapper.getEmptyListOfMedicineResponse())
+                .medicines(appointment.getAppointmentMedicines().stream().map(appointmentMedicine ->
+                         AppointmentMedicineItem.builder()
+                                 .appointmentMedicineId(appointmentMedicine.getId())
+                                 .medicineId(appointmentMedicine.getMedicine().getId())
+                                 .name(appointmentMedicine.getMedicine().getName())
+                                 .weight(appointmentMedicine.getWeight())
+                                 .build()).collect(Collectors.toList()))
                 .build();
     }
 

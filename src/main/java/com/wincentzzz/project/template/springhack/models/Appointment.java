@@ -34,12 +34,14 @@ public class Appointment {
     @OneToMany(mappedBy = "appointment")
     private List<Examination> examinations;
 
+    @OneToMany(mappedBy = "appointment")
+    private List<AppointmentMedicine> appointmentMedicines;
+
     @Column(name="date")
     private Date date;
 
     @Column(name="symptoms")
     private String symptoms;
-
 
     @Column(name="diagnosis")
     private String diagnosis;
